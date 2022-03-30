@@ -9,12 +9,12 @@ app = Flask(__name__)
 def main():
     return render_template("Главная.html")
 
-@app.route("/_background_process", methods=["GET", "POST"])
+@app.route("/_back_p", methods=["GET", "POST"])
 def background_process():
     try:
         order = float(request.args.get("order"))
         chains = Chains(order=int(order),
-                        filename="poems Baijron_clean.txt",
+                        filename="poems.txt",
                         length=50)
         output = chains.getPoem(rest=False)
         return jsonify(result=output)
@@ -30,7 +30,7 @@ def api_all():
         else:
             return "Ошибка"
         chains = Chains(order=order,
-                        filename="poems Baijron_clean.txt",
+                        filename="poems.txt",
                         length=50)
         output = chains.getPoem(rest=True)
         return jsonify(result=output)
