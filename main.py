@@ -14,7 +14,7 @@ def background_process():
     try:
         order = float(request.args.get("order"))
         chains = Chains(order=int(order),
-                        filename="poems.txt",
+                        filename="poems Baijron_clean.txt",
                         length=50)
         output = chains.getPoem(rest=False)
         return jsonify(result=output)
@@ -30,7 +30,7 @@ def api_all():
         else:
             return "Ошибка"
         chains = Chains(order=order,
-                        filename="poems.txt",
+                        filename="poems Baijron_clean.txt",
                         length=50)
         output = chains.getPoem(rest=True)
         return jsonify(result=output)
