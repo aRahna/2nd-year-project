@@ -15,25 +15,21 @@ class GetPoems:
         self.poem_links = []
         self.all_texts = []
 
-        # Prepare everything
         self._preparePoems()
 
     def _getCorpus(self):
-        """
-        Get all the pages from the rustih website, where our authors' poems are located at.
-        """
+
         import bs4 as bs
         import urllib.request
 
         page_links = []
         page_values = []
 
-        # Get the pages
+
         for page in self.soup.findAll("div", class_="nav-links"):
             page_links.append(str(page))
 
         for page in page_links:
-            # Find the last page if it exists and shows up
             start_point = page.find("Последняя", 0) - 20
             new_start_point = page.find("page", start_point) + len("page/")
             end_point = page.find("/", new_start_point)
@@ -43,7 +39,6 @@ class GetPoems:
             except:
                 pass
 
-            # Evaluate all pages on which is the largest one
             text_pointer = 0
             while text_pointer < len(page):
                 start_point = page.find("Страница", text_pointer) + len("Страница ")
@@ -77,7 +72,6 @@ class GetPoems:
 
         poem_links = []
         for page in self.page_links:
-            # Wait a bit first to be nice to the people that host the website
             rng = random.randint(4, 8)
             time.sleep(rng)
 
@@ -103,7 +97,6 @@ class GetPoems:
         all_text = []
 
         for idx, link in enumerate(self.poem_links):
-            # Wait a bit first to be nice to the people that host the website
             rng = random.randint(5, 15)
             time.sleep(rng)
 
@@ -115,7 +108,6 @@ class GetPoems:
 
         self.all_texts = all_text
 
-        # Now save all of the poems
         file_name = "poems " + self.author + ".txt"
         with io.open(file_name, "w", encoding="utf-8") as output:
             for poem in self.all_texts:
@@ -148,7 +140,6 @@ class CleanPoems:
                         temp_collector.append(new_word)
                 collector.append(temp_collector)
 
-        # Save the new clean poems
         self.new_file = self.original_file[:-4] + "_clean.txt"
 
         with io.open(self.new_file, "w", encoding="utf-8") as output:
